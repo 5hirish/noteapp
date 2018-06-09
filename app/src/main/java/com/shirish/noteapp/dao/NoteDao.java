@@ -25,6 +25,9 @@ public interface NoteDao {
     @Query("SELECT * FROM note_data WHERE note_checked = 0 ORDER BY note_created_at DESC")
     LiveData<List<Note>> getAllUnMarkedNotes();
 
+    @Query("SELECT * FROM note_data WHERE note_category LIKE :noteCategory ORDER BY note_created_at DESC")
+    LiveData<List<Note>> getAllNotesWithCategory(String noteCategory);
+
     @Insert
     long insertNote(Note noteData);
 
