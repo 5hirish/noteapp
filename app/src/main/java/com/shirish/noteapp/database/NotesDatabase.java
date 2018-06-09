@@ -15,7 +15,7 @@ public abstract class NotesDatabase extends RoomDatabase {
     private static volatile NotesDatabase dbInstance;
 
     // Single to avoid multiple expensive db instances
-    static synchronized NotesDatabase getDbInstance(Context context) {
+    public static synchronized NotesDatabase getDbInstance(Context context) {
         if (dbInstance == null) {
             dbInstance = createInstance(context);
         }

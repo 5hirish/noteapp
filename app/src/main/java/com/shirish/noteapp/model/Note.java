@@ -5,7 +5,6 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-import java.util.Date;
 
 @Entity(tableName = "note_data")
 public class Note {
@@ -23,11 +22,9 @@ public class Note {
     private String noteCategory;
 
     @ColumnInfo(name = "note_created_at")
-    @NonNull
     private long createdAt;
 
     @ColumnInfo(name = "note_checked")
-    @NonNull
     private boolean noteChecked;
 
 
@@ -39,19 +36,21 @@ public class Note {
         this.noteId = noteId;
     }
 
+    @NonNull
     public String getNoteContent() {
         return noteContent;
     }
 
-    public void setNoteContent(String noteContent) {
+    public void setNoteContent(@NonNull String noteContent) {
         this.noteContent = noteContent;
     }
 
+    @NonNull
     public String getNoteCategory() {
         return noteCategory;
     }
 
-    public void setNoteCategory(String noteCategory) {
+    public void setNoteCategory(@NonNull String noteCategory) {
         this.noteCategory = noteCategory;
     }
 
@@ -61,5 +60,13 @@ public class Note {
 
     public void setCreatedAt(long createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public boolean isNoteChecked() {
+        return noteChecked;
+    }
+
+    public void setNoteChecked(boolean noteChecked) {
+        this.noteChecked = noteChecked;
     }
 }
