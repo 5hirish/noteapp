@@ -1,5 +1,6 @@
 package com.shirish.noteapp.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,9 +16,11 @@ import java.util.List;
 public class MarkedNotesAdapter extends RecyclerView.Adapter<MarkedNotesAdapter.NoteViewHolder> {
 
     private List<Note> noteList;
+    private Context context;
 
-    public MarkedNotesAdapter(List<Note> noteList) {
+    public MarkedNotesAdapter(List<Note> noteList, Context context) {
         this.noteList = noteList;
+        this.context = context;
     }
 
     @Override
@@ -41,14 +44,10 @@ public class MarkedNotesAdapter extends RecyclerView.Adapter<MarkedNotesAdapter.
         return noteList.size();
     }
 
-    /*
-
-    public void addNotes(List<Note> noteList) {
+    public void updateAdapter(List<Note> noteList) {
         this.noteList = noteList;
         notifyDataSetChanged();
     }
-
-    */
 
     static class NoteViewHolder extends RecyclerView.ViewHolder {
 

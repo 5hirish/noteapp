@@ -28,6 +28,17 @@ public class Note {
     private boolean noteChecked;
 
 
+    public Note(@NonNull String noteContent, @NonNull String noteCategory, long createdAt, boolean noteChecked) {
+        this.noteContent = noteContent;
+        this.noteCategory = noteCategory;
+        this.createdAt = createdAt;
+        this.noteChecked = noteChecked;
+    }
+
+    public Note() {
+
+    }
+
     public int getNoteId() {
         return noteId;
     }
