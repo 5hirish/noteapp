@@ -6,6 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.shirish.noteapp.R;
@@ -16,10 +19,12 @@ import java.util.List;
 public class UnMarkedNotesAdapter extends RecyclerView.Adapter<UnMarkedNotesAdapter.NoteViewHolder> {
 
     private List<Note> noteList;
+    private OnCheckChangedListener checkedChangeListener;
     private Context context;
 
-    public UnMarkedNotesAdapter(List<Note> noteList, Context context) {
+    public UnMarkedNotesAdapter(List<Note> noteList, OnCheckChangedListener checkedChangeListener, Context context) {
         this.noteList = noteList;
+        this.checkedChangeListener = checkedChangeListener;
         this.context = context;
     }
 
@@ -31,12 +36,17 @@ public class UnMarkedNotesAdapter extends RecyclerView.Adapter<UnMarkedNotesAdap
 
     @Override
     public void onBindViewHolder(final NoteViewHolder holder, int position) {
-        Note note = noteList.get(position);
-        holder.cbNoteStatus.setEnabled(note.isNoteChecked());
+        final Note note = noteList.get(position);
+        holder.cbNoteStatus.setChecked(note.isNoteChecked());
         holder.tvNoteContent.setText(note.getNoteContent());
         holder.tvNoteCategory.setText(note.getNoteCategory());
 
-        // Checkbox listener
+        holder.cbNoteStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                checkedChangeListener.onCheckboxCheckedMarkNote(note);
+            }
+        });
     }
 
     @Override
@@ -61,5 +71,9 @@ public class UnMarkedNotesAdapter extends RecyclerView.Adapter<UnMarkedNotesAdap
             tvNoteContent = (TextView) view.findViewById(R.id.tvNoteContent);
             tvNoteCategory = (TextView) view.findViewById(R.id.tvNoteCategory);
         }
+    }
+
+    public interface OnCheckChangedListener {
+        public void onCheckboxCheckedMarkNote(Note updateNote);
     }
 }

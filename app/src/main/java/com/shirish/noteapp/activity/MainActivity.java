@@ -15,6 +15,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.shirish.noteapp.R;
@@ -28,7 +30,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements UnMarkedNotesAdapter.OnCheckChangedListener, MarkedNotesAdapter.OnCheckChangedListener {
 
     private NotesViewModel notesViewModel;
     private MarkedNotesAdapter markedNotesAdapter;
@@ -58,14 +61,14 @@ public class MainActivity extends AppCompatActivity {
         spNoteCategory.setAdapter(categoryAdapter);
         spNoteCategory.setSelection(0);
 
-        unMarkedNotesAdapter = new UnMarkedNotesAdapter(new ArrayList<Note>(), this);
+        unMarkedNotesAdapter = new UnMarkedNotesAdapter(new ArrayList<Note>(), this, this);
         rvUnMarkedNotes.setLayoutManager(new LinearLayoutManager(this));
         rvUnMarkedNotes.setAdapter(unMarkedNotesAdapter);
         rvUnMarkedNotes.setHasFixedSize(true);
         rvUnMarkedNotes.setNestedScrollingEnabled(false);
         rvUnMarkedNotes.setItemAnimator(new DefaultItemAnimator());
 
-        markedNotesAdapter = new MarkedNotesAdapter(new ArrayList<Note>(), this);
+        markedNotesAdapter = new MarkedNotesAdapter(new ArrayList<Note>(), this, this);
         rvMarkedNotes.setLayoutManager(new LinearLayoutManager(this));
         rvMarkedNotes.setAdapter(markedNotesAdapter);
         rvMarkedNotes.setHasFixedSize(true);
@@ -119,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                     tiNoteContent.setErrorEnabled(false);
                     Toast.makeText(getApplicationContext(),"Select a note category", Toast.LENGTH_SHORT).show();
                 }
+
                 /*Intent in = new Intent(MainActivity.this, CheckActivity.class);
                 startActivity(in);*/
             }
@@ -129,4 +133,17 @@ public class MainActivity extends AppCompatActivity {
         return strData != null && strData.length() > 0;
     }
 
+    @Override
+    public void onCheckboxCheckedMarkNote(Note updateNote) {
+
+        updateNote.setNoteChecked(true);
+        notesViewModel.markNote(updateNote);
+    }
+
+    @Override
+    public void onCheckboxCheckedUnMarkNote(Note updateNote) {
+
+        updateNote.setNoteChecked(false);
+        notesViewModel.markNote(updateNote);
+    }
 }

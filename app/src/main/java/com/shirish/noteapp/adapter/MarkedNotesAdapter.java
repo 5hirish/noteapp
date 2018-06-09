@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.shirish.noteapp.R;
@@ -16,10 +18,12 @@ import java.util.List;
 public class MarkedNotesAdapter extends RecyclerView.Adapter<MarkedNotesAdapter.NoteViewHolder> {
 
     private List<Note> noteList;
+    private OnCheckChangedListener checkedChangeListener;
     private Context context;
 
-    public MarkedNotesAdapter(List<Note> noteList, Context context) {
+    public MarkedNotesAdapter(List<Note> noteList, OnCheckChangedListener checkedChangeListener, Context context) {
         this.noteList = noteList;
+        this.checkedChangeListener = checkedChangeListener;
         this.context = context;
     }
 
@@ -31,12 +35,17 @@ public class MarkedNotesAdapter extends RecyclerView.Adapter<MarkedNotesAdapter.
 
     @Override
     public void onBindViewHolder(final NoteViewHolder holder, int position) {
-        Note note = noteList.get(position);
-        holder.cbNoteStatus.setEnabled(note.isNoteChecked());
+        final Note note = noteList.get(position);
+        holder.cbNoteStatus.setChecked(note.isNoteChecked());
         holder.tvNoteContent.setText(note.getNoteContent());
         holder.tvNoteCategory.setText(note.getNoteCategory());
 
-        // Checkbox listener
+        holder.cbNoteStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                checkedChangeListener.onCheckboxCheckedUnMarkNote(note);
+            }
+        });
     }
 
     @Override
@@ -61,5 +70,9 @@ public class MarkedNotesAdapter extends RecyclerView.Adapter<MarkedNotesAdapter.
             tvNoteContent = (TextView) view.findViewById(R.id.tvNoteContent);
             tvNoteCategory = (TextView) view.findViewById(R.id.tvNoteCategory);
         }
+    }
+
+    public interface OnCheckChangedListener {
+        public void onCheckboxCheckedUnMarkNote(Note updateNote);
     }
 }
