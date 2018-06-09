@@ -1,6 +1,7 @@
 package com.shirish.noteapp.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -40,6 +41,8 @@ public class MarkedNotesAdapter extends RecyclerView.Adapter<MarkedNotesAdapter.
         holder.tvNoteContent.setText(note.getNoteContent());
         holder.tvNoteCategory.setText(note.getNoteCategory());
 
+        holder.tvNoteContent.setPaintFlags(holder.tvNoteContent.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
         holder.cbNoteStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -73,6 +76,6 @@ public class MarkedNotesAdapter extends RecyclerView.Adapter<MarkedNotesAdapter.
     }
 
     public interface OnCheckChangedListener {
-        public void onCheckboxCheckedUnMarkNote(Note updateNote);
+        void onCheckboxCheckedUnMarkNote(Note updateNote);
     }
 }

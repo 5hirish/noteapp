@@ -26,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
+                android:layout_marginTop="8dp"
                 android:descendantFocusability="beforeDescendants"
                 android:focusableInTouchMode="true"
                 android:orientation="vertical">
@@ -48,6 +49,7 @@
                 <android.support.v7.widget.AppCompatSpinner
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
+                    android:layout_marginTop="8dp"
                     android:id="@+id/spNoteCategory"/>
 
             </LinearLayout>

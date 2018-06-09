@@ -64,7 +64,7 @@ public class UnMarkedNotesAdapter extends RecyclerView.Adapter<UnMarkedNotesAdap
         private TextView tvNoteContent, tvNoteCategory;
         private AppCompatCheckBox cbNoteStatus;
 
-        public NoteViewHolder(View view) {
+        NoteViewHolder(View view) {
             super(view);
 
             cbNoteStatus = (AppCompatCheckBox) view.findViewById(R.id.cbNoteMarked);
@@ -74,6 +74,6 @@ public class UnMarkedNotesAdapter extends RecyclerView.Adapter<UnMarkedNotesAdap
     }
 
     public interface OnCheckChangedListener {
-        public void onCheckboxCheckedMarkNote(Note updateNote);
+        void onCheckboxCheckedMarkNote(Note updateNote);
     }
 }

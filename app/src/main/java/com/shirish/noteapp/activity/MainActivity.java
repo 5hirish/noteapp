@@ -2,6 +2,7 @@ package com.shirish.noteapp.activity;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -113,6 +115,16 @@ public class MainActivity extends AppCompatActivity
                     newNote.setNoteChecked(false);
 
                     notesViewModel.addNote(newNote);
+
+                    // Reset UI components to default state...
+                    hideSoftKeyboard();
+                    etNoteContent.setText("");
+                    etNoteContent.clearFocus();
+                    tiNoteContent.setHintEnabled(true);
+                    spNoteCategory.setSelection(0);
+
+                    Toast.makeText(getApplicationContext(),"Note Created...", Toast.LENGTH_SHORT).show();
+
                     //NotesDatabase.getDbInstance(getApplicationContext()).getNoteDao().insertNote(newNote);
 
                 } else if (!isNotEmpty(strNoteContent)) {
@@ -123,10 +135,18 @@ public class MainActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(),"Select a note category", Toast.LENGTH_SHORT).show();
                 }
 
-                /*Intent in = new Intent(MainActivity.this, CheckActivity.class);
-                startActivity(in);*/
             }
         });
+    }
+
+    private void hideSoftKeyboard() {
+        View view = getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+
+        }
     }
 
     private boolean isNotEmpty(String strData) {
